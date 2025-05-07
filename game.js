@@ -1,3 +1,4 @@
+let gameOver = false;
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -60,13 +61,37 @@ function drawObstacles() {
 }
 
 function gameLoop() {
+  if (gameOver) {
+  ctx.fillStyle = "#000";
+  ctx.font = "40px Arial";
+  ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+  return;
+}
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   applyGravity();
   updateObstacles();
+  checkCollision();
   drawPlayer();
   drawObstacles();
   requestAnimationFrame(gameLoop);
 }
+function checkCollision() {
+  for (let i = 0; i < obstacles.length; i++) {
+    const ob = obstacles[i];
+    if (
+      player.x < ob.x + ob.width &&
+      player.x + player.width > ob.x &&
+      player.y < ob.y + ob.height &&
+      player.y + player.height > ob.y
+    ) {
+      console.log("Collision Detected!");
+      gameOver = true;
+    }
+  }
+}
+
+
 
 setInterval(generateObstacle, 2000);
 gameLoop();
