@@ -1,6 +1,7 @@
 let gameOver = false;
 let score = 0;
 const canvas = document.getElementById("gameCanvas");
+const restartBtn = document.getElementById("restartBtn");
 const ctx = canvas.getContext("2d");
 
 let player = {
@@ -76,6 +77,7 @@ function gameLoop() {
   if (gameOver) {
   ctx.fillStyle = "#000";
   ctx.font = "40px Arial";
+  restartBtn.style.display = "block";
   ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
   return;
 }
