@@ -68,6 +68,21 @@ function gameLoop() {
   drawObstacles();
   requestAnimationFrame(gameLoop);
 }
+function checkCollision() {
+  for (let i = 0; i < obstacles.length; i++) {
+    const ob = obstacles[i];
+    if (
+      player.x < ob.x + ob.width &&
+      player.x + player.width > ob.x &&
+      player.y < ob.y + ob.height &&
+      player.y + player.height > ob.y
+    ) {
+      console.log("Collision Detected!");
+      gameOver = true;
+    }
+  }
+}
+
 
 
 setInterval(generateObstacle, 2000);
