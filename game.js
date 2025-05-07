@@ -53,6 +53,12 @@ function updateObstacles() {
   }
 }
 
+function drawScore() {
+  ctx.fillStyle = "#000";
+  ctx.font = "20px Arial";
+  ctx.fillText("Score: " + score, 10, 30);
+}
+
 
 function drawPlayer() {
   ctx.fillStyle = "#0077ff";
@@ -80,6 +86,7 @@ function gameLoop() {
   checkCollision();
   drawPlayer();
   drawObstacles();
+  drawScore();
   requestAnimationFrame(gameLoop);
 }
 function checkCollision() {
