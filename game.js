@@ -61,9 +61,17 @@ function drawObstacles() {
 }
 
 function gameLoop() {
+  if (gameOver) {
+  ctx.fillStyle = "#000";
+  ctx.font = "40px Arial";
+  ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+  return;
+}
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   applyGravity();
   updateObstacles();
+  checkCollision();
   drawPlayer();
   drawObstacles();
   requestAnimationFrame(gameLoop);
