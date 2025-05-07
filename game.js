@@ -25,3 +25,25 @@ function applyGravity() {
     player.grounded = true;
   }
 }
+let obstacles = [];
+
+function generateObstacle() {
+  obstacles.push({
+    x: 800,
+    y: 350,
+    width: 50,
+    height: 50
+  });
+}
+
+setInterval(generateObstacle, 2000); 
+
+function updateObstacles() {
+  for (let i = 0; i < obstacles.length; i++) {
+    obstacles[i].x -= 5; 
+  }
+}
+
+applyGravity();
+updateObstacles();
+
