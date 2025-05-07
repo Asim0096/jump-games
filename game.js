@@ -1,4 +1,5 @@
 let gameOver = false;
+let score = 0;
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -45,8 +46,13 @@ function generateObstacle() {
 function updateObstacles() {
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].x -= 5;
+
+    if (obstacles[i].x + obstacles[i].width === player.x) {
+      score++;
+    }
   }
 }
+
 
 function drawPlayer() {
   ctx.fillStyle = "#0077ff";
