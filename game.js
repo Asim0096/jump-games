@@ -106,6 +106,16 @@ function checkCollision() {
   }
 }
 
+restartBtn.addEventListener("click", () => {
+  player.y = 200;
+  player.velocityY = 0;
+  player.grounded = false;
+  obstacles = [];
+  score = 0;
+  gameOver = false;
+  restartBtn.style.display = "none";
+  gameLoop(); 
+});
 
 
 setInterval(generateObstacle, 2000);

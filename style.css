@@ -9,3 +9,12 @@ canvas {
   background-color: #eee;
   border: 2px solid #444;
 }
+restartBtn {
+    display: none;
+    position: absolute;
+    top: 180px; /* غيّر حسب مكان canvas */
+    left: 370px; /* غيّر حسب مكان canvas */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
