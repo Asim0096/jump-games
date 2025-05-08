@@ -1,23 +1,28 @@
 let gameOver = false;
 let score = 0;
-
 const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
 const restartBtn = document.getElementById("restartBtn");
+const ctx = canvas.getContext("2d");
 
-let playerImage = new Image();
-playerImage.src = "ball.png"; 
+// Load player image
+const playerImg = new Image();
+playerImg.src = "ball.png";
+
+// Load obstacle image
+const obstacleImg = new Image();
+obstacleImg.src = "ro.jpg";
+
 let player = {
   x: 50,
   y: 200,
   width: 50,
   height: 50,
   velocityY: 0,
-  jumpForce: -10,
+  jumpForce: -12,
   grounded: false
 };
 
-let gravity = 0.5;
+let gravity = 0.6;
 let obstacles = [];
 
 function applyGravity() {
@@ -58,42 +63,26 @@ function updateObstacles() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#fff";
+  ctx.fillStyle = "#000";
   ctx.font = "20px Arial";
   ctx.fillText("Score: " + score, 10, 30);
 }
 
 function drawPlayer() {
-  ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+  ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
 }
 
 function drawObstacles() {
-  ctx.fillStyle = "#ff4444";
   obstacles.forEach(ob => {
-    ctx.fillRect(ob.x, ob.y, ob.width, ob.height);
+    ctx.drawImage(obstacleImg, ob.x, ob.y, ob.width, ob.height);
   });
-}
-
-function checkCollision() {
-  for (let i = 0; i < obstacles.length; i++) {
-    const ob = obstacles[i];
-    if (
-      player.x < ob.x + ob.width &&
-      player.x + player.width > ob.x &&
-      player.y < ob.y + ob.height &&
-      player.y + player.height > ob.y
-    ) {
-      console.log("Collision Detected!");
-      gameOver = true;
-    }
-  }
 }
 
 function gameLoop() {
   if (gameOver) {
     ctx.fillStyle = "#000";
     ctx.font = "40px Arial";
-    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2 - 20);
     restartBtn.style.display = "block";
     return;
   }
@@ -108,6 +97,20 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 
+function checkCollision() {
+  for (let i = 0; i < obstacles.length; i++) {
+    const ob = obstacles[i];
+    if (
+      player.x < ob.x + ob.width &&
+      player.x + player.width > ob.x &&
+      player.y < ob.y + ob.height &&
+      player.y + player.height > ob.y
+    ) {
+      gameOver = true;
+    }
+  }
+}
+
 restartBtn.addEventListener("click", () => {
   player.y = 200;
   player.velocityY = 0;
@@ -116,7 +119,7 @@ restartBtn.addEventListener("click", () => {
   score = 0;
   gameOver = false;
   restartBtn.style.display = "none";
-  gameLoop(); 
+  gameLoop();
 });
 
 setInterval(generateObstacle, 2000);
