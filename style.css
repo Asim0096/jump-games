@@ -1,0 +1,44 @@
+body {
+  margin: 0;
+  background-color: #222;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  background-color: #eee;
+  border: 2px solid #444;
+}
+restartBtn {
+    display: none;
+    position: absolute;
+    top: 180px; 
+    left: 370px; 
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #87ceeb;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      background: url('backgr.jpg') no-repeat center center;
+      background-size: cover;
+    }
+    #restartBtn {
+      display: none;
+      position: absolute;
+      top: 180px;
+      left: 370px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }

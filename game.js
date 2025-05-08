@@ -1,5 +1,7 @@
 let gameOver = false;
+let score = 0;
 const canvas = document.getElementById("gameCanvas");
+const restartBtn = document.getElementById("restartBtn");
 const ctx = canvas.getContext("2d");
 
 let player = {
@@ -45,8 +47,19 @@ function generateObstacle() {
 function updateObstacles() {
   for (let i = 0; i < obstacles.length; i++) {
     obstacles[i].x -= 5;
+
+    if (obstacles[i].x + obstacles[i].width === player.x) {
+      score++;
+    }
   }
 }
+
+function drawScore() {
+  ctx.fillStyle = "#000";
+  ctx.font = "20px Arial";
+  ctx.fillText("Score: " + score, 10, 30);
+}
+
 
 function drawPlayer() {
   ctx.fillStyle = "#0077ff";
@@ -64,6 +77,7 @@ function gameLoop() {
   if (gameOver) {
   ctx.fillStyle = "#000";
   ctx.font = "40px Arial";
+  restartBtn.style.display = "block";
   ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
   return;
 }
@@ -74,6 +88,7 @@ function gameLoop() {
   checkCollision();
   drawPlayer();
   drawObstacles();
+  drawScore();
   requestAnimationFrame(gameLoop);
 }
 function checkCollision() {
@@ -91,6 +106,16 @@ function checkCollision() {
   }
 }
 
+restartBtn.addEventListener("click", () => {
+  player.y = 200;
+  player.velocityY = 0;
+  player.grounded = false;
+  obstacles = [];
+  score = 0;
+  gameOver = false;
+  restartBtn.style.display = "none";
+  gameLoop(); 
+});
 
 
 setInterval(generateObstacle, 2000);
