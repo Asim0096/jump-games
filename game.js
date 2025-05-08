@@ -1,9 +1,12 @@
 let gameOver = false;
 let score = 0;
-const canvas = document.getElementById("gameCanvas");
-const restartBtn = document.getElementById("restartBtn");
-const ctx = canvas.getContext("2d");
 
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const restartBtn = document.getElementById("restartBtn");
+
+let playerImage = new Image();
+playerImage.src = "ball.png"; 
 let player = {
   x: 50,
   y: 200,
@@ -55,15 +58,13 @@ function updateObstacles() {
 }
 
 function drawScore() {
-  ctx.fillStyle = "#000";
+  ctx.fillStyle = "#fff";
   ctx.font = "20px Arial";
   ctx.fillText("Score: " + score, 10, 30);
 }
 
-
 function drawPlayer() {
-  ctx.fillStyle = "#0077ff";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
 }
 
 function drawObstacles() {
@@ -73,24 +74,6 @@ function drawObstacles() {
   });
 }
 
-function gameLoop() {
-  if (gameOver) {
-  ctx.fillStyle = "#000";
-  ctx.font = "40px Arial";
-  restartBtn.style.display = "block";
-  ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
-  return;
-}
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  applyGravity();
-  updateObstacles();
-  checkCollision();
-  drawPlayer();
-  drawObstacles();
-  drawScore();
-  requestAnimationFrame(gameLoop);
-}
 function checkCollision() {
   for (let i = 0; i < obstacles.length; i++) {
     const ob = obstacles[i];
@@ -106,6 +89,25 @@ function checkCollision() {
   }
 }
 
+function gameLoop() {
+  if (gameOver) {
+    ctx.fillStyle = "#000";
+    ctx.font = "40px Arial";
+    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    restartBtn.style.display = "block";
+    return;
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  applyGravity();
+  updateObstacles();
+  checkCollision();
+  drawPlayer();
+  drawObstacles();
+  drawScore();
+  requestAnimationFrame(gameLoop);
+}
+
 restartBtn.addEventListener("click", () => {
   player.y = 200;
   player.velocityY = 0;
@@ -116,7 +118,6 @@ restartBtn.addEventListener("click", () => {
   restartBtn.style.display = "none";
   gameLoop(); 
 });
-
 
 setInterval(generateObstacle, 2000);
 gameLoop();
